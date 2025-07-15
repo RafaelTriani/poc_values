@@ -1,0 +1,40 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-csharp-service
+  title: Criar Serviço C# (.NET)
+  description: Gera um serviço C# com base em uma stack selecionada (Microsoft ou Serilog)
+spec:
+  owner: plataforma/devops
+  type: service
+
+  parameters:
+    - title: Configuração do Projeto
+      required: [name, stack]
+      properties:
+        name:
+          type: string
+          title: Nome do projeto (ex: OrderService)
+        stack:
+          type: string
+          title: Stack de logging
+          enum:
+            - Microsoft
+            - Serilog
+
+  steps:
+    - id: fetch-values
+      name: Buscar valores da stack
+      action: fetch:plain
+      input:
+        url: https://raw.githubusercontent.com/RafaelTriani/poc_skeleton/main/values/api-${{ parameters.stack }}.yaml
+        targetPath: ./template-values
+
+    - id: renderizar
+      name: Aplicar template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          $file: ./template-values/api-${{ parameters.stack }}.yaml

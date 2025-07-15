@@ -1,0 +1,8 @@
+projectNameSpace: ${{ parameters.projectNameSpace }}
+packageReference: | 
+                  <PackageReference Include="Adapter.Microsoft" Version="1.0.3" />
+usingLogProgram: |
+                  using Evertec.Extensions.Logging.Extensions.Microsoft;
+builderLogConfiguration: |
+                          builder.Logging.ClearProviders();
+                          builder.Logging.AddSinqiaLogging(GelfFormatter: false);
