@@ -1,5 +1,6 @@
 id: select-logging-serilog
 name: Fetch Base Serilog
+if: ${{ parameters.log == 'Serilog' }}
 action: fetch:template
 input:
     url: "https://github.com/RafaelTriani/poc_values"
