@@ -17,22 +17,3 @@ input:
       builderLogConfiguration: |
                                   builder.Logging.ClearProviders();
                                   builder.Logging.AddSinqiaLogging(GelfFormatter: false);
-
-id: select-logging-serilog
-name: Fetch Base Serilog
-if: ${{ parameters.log == 'Serilog' }}
-action: fetch:template
-input:
-    url: "https://github.com/RafaelTriani/poc_values"
-    values:
-      name: ${{ parameters.repoName }}
-      owner: RafaelTriani
-      description: ${{ parameters.description }}
-      githubUser: ${{ parameters.githubUser }}
-      projectNameSpace: ${{ parameters.projectNameSpace }}
-      packageReference: | 
-                          <PackageReference Include="Adapter.Serilog" Version="1.0.0" />
-      usingLogProgram: |
-                          using Evertec.Extensions.Logging.Extensions.Serilog;
-      builderLogConfiguration: |
-                                  builder.Host.AddSerilogImplementationPattern("Vertical", "Sistema", "Modulo");
