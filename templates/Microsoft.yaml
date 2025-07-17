@@ -1,0 +1,18 @@
+id: select-logging-microsoft
+name: Fetch Base Microsoft
+action: fetch:template
+input:
+    url: "https://github.com/RafaelTriani/poc_values"
+    values:
+      name: ${{ parameters.repoName }}
+      owner: RafaelTriani
+      description: ${{ parameters.description }}
+      githubUser: ${{ parameters.githubUser }}
+      projectNameSpace: ${{ parameters.projectNameSpace }}
+      packageReference: | 
+                          <PackageReference Include="Adapter.Microsoft" Version="1.0.3" />
+      usingLogProgram: |
+                          using Evertec.Extensions.Logging.Extensions.Microsoft;
+      builderLogConfiguration: |
+                                  builder.Logging.ClearProviders();
+                                  builder.Logging.AddSinqiaLogging(GelfFormatter: false);
